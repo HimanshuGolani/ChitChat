@@ -1,0 +1,36 @@
+How to user queries in API URLS 
+ans : 
+
+// http://localhost:4000/api/v1/user/search-users ? search=himanshu&lastname=golani
+
+? search=himanshu&lastname=golani
+
+this is how you design it or right it
+
+
+// how do you access it ?
+ans -> req.query.name_of_the_query
+example:like req.query.search
+
+// very very imp 
+
+export const getAllUsers = async (req, res) => {
+  const keywoard = req.query.search
+    ? {
+        $or: [
+          { name: { $regex: req.query.search, $options: "i" } },
+          { email: { $regex: req.query.search, $options: "i" } },
+        ],
+      }
+    : {};
+};
+
+
+ $or -> or this will return the output of the above expression
+
+
+ { name: { $regex: req.query.search, $options: "i" } },
+ { email: { $regex: req.query.search, $options: "i" } },
+
+ $regex -> means reguler expression that can match the input given to it 
+ $options :'i' means case censitive o/p  
